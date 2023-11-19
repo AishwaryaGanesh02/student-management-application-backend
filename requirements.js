@@ -6,6 +6,9 @@
 
 // ● Show all Students.
 // ● Filter Students based on criteria.
+// -- Class
+// -- Percentage
+// -- Grade
 // ● Search for a Student.
 // ● Update a Student's Record.
 // ● Delete a Student.
@@ -18,11 +21,11 @@
 // ● Class.
 // ● Subjects List.
 // ● Marks in each subject.
-// ● Percentage and Grade of Student (A+: 90+, A: 90-80, B: 80-70, C:
-// 70-60, D: 60-50, F: 50 below).
+// ● Percentage and Grade of Student (A+: 90+, A: 90-80, B: 80-70, C: 70-60, D: 60-50, F: 50 below).
 
 // Note: Implement an appropriate structure for the student, and records must be
 // stored in a file-based system.
+
 // Bonus/ Optional Tasks:
 // 1. Get Average Percentage of a Class: Implement a feature to calculate and display
 // the average percentage of students in a specified class.
