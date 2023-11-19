@@ -127,7 +127,11 @@ app.put("/students/marks/update", (req, res) => {
   const student = database.students.find(
     (student) => student.id === req.body.id
   );
-
+  if (student === undefined) {
+    return res.json({
+      error: `No student with id: ${req.body.id}`,
+    });
+  }
   student.subjects = req.body.subjects;
   const subjectMarks = Object.values(student.subjects).map(
     (subject) => subject.marks
@@ -156,10 +160,60 @@ Methods         DELETE
 */
 app.delete("/students/delete/:id", (req, res) => {
   const updatedStudentsDatabase = database.students.filter(
-    (student) => student.id !== req.params.id
+    (student) => student.id != req.params.id
   );
+  if (updatedStudentsDatabase.length !== database.students.length - 1) {
+    return res.json({
+      error: `No student with id: ${req.params.id}`,
+    });
+  }
   database.students = updatedStudentsDatabase;
   return res.json({ Students: database.students });
+});
+
+//AVERAGE OF A STUDENT
+/*
+Route           /average/id
+Description     Average marks of a student
+Access          Public
+Parameter       id
+Methods         GET
+*/
+app.get("/average/id/:id", (req, res) => {
+  const getSpecificStudent = database.students.find(
+    (student) => student.id == req.params.id
+  );
+  if (getSpecificStudent === undefined) {
+    return res.json({
+      error: `No student with id: ${req.params.id}`,
+    });
+  }
+  return res.json({ "Average of student": getSpecificStudent.percentage });
+});
+
+//AVERAGE OF A CLASS
+/*
+Route           /average/class
+Description     Average marks of a class
+Access          Public
+Parameter       class
+Methods         GET
+*/
+app.get("/average/class/:class", (req, res) => {
+  const getSpecificClass = database.students.filter(
+    (student) => student.class == req.params.class
+  );
+  if (getSpecificClass === undefined) {
+    return res.json({
+      error: `No students in class: ${req.params.class}`,
+    });
+  }
+  let sumMarks = 0;
+  getSpecificClass.forEach((student) => {
+    sumMarks += student.percentage;
+  });
+  const average = sumMarks / getSpecificClass.length;
+  return res.json({ "Average of class ": average.toFixed(2) });
 });
 
 app.listen(3000, () => {
